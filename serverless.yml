@@ -1,0 +1,19 @@
+service: game-of-bricks-store
+
+frameworkVersion: '2'
+
+provider:
+  name: aws
+  runtime: nodejs12.x
+  region: eu-west-1
+
+plugins:
+  - serverless-finch
+
+custom:
+  # serverless-finch config:
+  client:
+    bucketName: task-2-automatic-deploy
+    distributionFolder: build
+    indexDocument: index.html
+    errorDocument: index.html
