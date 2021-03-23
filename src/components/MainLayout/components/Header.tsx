@@ -47,7 +47,7 @@ export default function Header() {
       <Toolbar>
         <Typography variant="h6" className={classes.title}>
           <Link className={classes.homeLink} to="/">
-            My <strong>Game of Bricks</strong> Store
+            <strong>Game of Bricks</strong> Store
           </Link>
         </Typography>
 
