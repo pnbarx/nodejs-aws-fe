@@ -7,12 +7,14 @@ import {Provider} from 'react-redux';
 import * as serviceWorker from './serviceWorker';
 import CssBaseline from "@material-ui/core/CssBaseline";
 import axios from 'axios';
+import {MuiThemeProvider} from "@material-ui/core/styles";
+import {theme} from "./theme";
 
 axios.interceptors.response.use(
   response => {
     return response;
   },
-  function(error) {
+  function (error) {
     if (error?.response?.status === 400) {
       alert(error.response.data?.data);
     }
@@ -24,8 +26,10 @@ axios.interceptors.response.use(
 ReactDOM.render(
   <React.StrictMode>
     <Provider store={store}>
-      <CssBaseline/>
-      <App/>
+      <MuiThemeProvider theme={theme}>
+        <CssBaseline/>
+        <App/>
+      </MuiThemeProvider>
     </Provider>
   </React.StrictMode>,
   document.getElementById('root')
