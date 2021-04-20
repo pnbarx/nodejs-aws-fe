@@ -12,11 +12,11 @@ export type Product = {
 };
 
 export const ProductSchema = Yup.object().shape({
-  title: Yup.string().required(),
-  description: Yup.string(),
-  pieces: Yup.number(),
-  thumb: Yup.string().required(),
+  title: Yup.string().required().default(''),
+  description: Yup.string().required().default(''),
+  pieces: Yup.number().default(1000),
+  thumb: Yup.string().default(''),
   images: Yup.array().of(Yup.string()),
-  price: Yup.number().required(),
-  count: Yup.number().required(),
+  price: Yup.number().required().default(100),
+  count: Yup.number().required().default(10),
 });
