@@ -42,6 +42,7 @@ const Form = (props: FormikProps<FormikValues>) => {
             component={TextField}
             name="title"
             label="Title"
+            color={"secondary"}
             fullWidth
             autoComplete="off"
             required
@@ -52,10 +53,21 @@ const Form = (props: FormikProps<FormikValues>) => {
             component={TextField}
             name="description"
             label="Description"
+            color={"secondary"}
             fullWidth
             autoComplete="off"
             multiline
             required
+          />
+        </Grid>
+        <Grid item xs={12}>
+          <Field
+            component={TextField}
+            name="thumb"
+            label="Product photo thumbnail (leave blank for default)"
+            color={"secondary"}
+            fullWidth
+            autoComplete="off"
           />
         </Grid>
         <Grid item xs={12} sm={4}>
@@ -63,6 +75,7 @@ const Form = (props: FormikProps<FormikValues>) => {
             component={TextField}
             name="price"
             label="Price ($)"
+            color={"secondary"}
             fullWidth
             autoComplete="off"
             required
@@ -73,15 +86,24 @@ const Form = (props: FormikProps<FormikValues>) => {
             component={TextField}
             name="count"
             label="Count"
+            color={"secondary"}
             fullWidth
             autoComplete="off"
             required
           />
         </Grid>
+        <Grid item xs={12} sm={4}>
+          <Field
+            component={TextField}
+            name="pieces"
+            label="Number of pieces"
+            color={"secondary"}
+            fullWidth
+            autoComplete="off"
+          />
+        </Grid>
         <Grid item container xs={12} justify="space-between">
-          <Button
-            color="primary"
-          >
+          <Button color="secondary">
             Cancel
           </Button>
           <Button
@@ -108,9 +130,14 @@ export default function PageProductForm() {
 
   const onSubmit = (values: FormikValues) => {
     const formattedValues = ProductSchema.cast(values);
-    const productToSave = id ? {...ProductSchema.cast(formattedValues), id} : formattedValues;
-    axios.put(`${API_PATHS.bff}/product`, productToSave)
-      .then(() => history.push('/admin/products'));
+    if (id) {
+      return axios.put(`${API_PATHS.products}/products/{id}`, formattedValues)
+        .then(() => history.push('/admin/products'));
+    } else {
+      return axios.post(`${API_PATHS.products}/products`, formattedValues)
+        .then(() => history.push('/'))
+        .finally(() => setIsLoading(false));
+    }
   };
 
   useEffect(() => {
@@ -118,7 +145,7 @@ export default function PageProductForm() {
       setIsLoading(false);
       return;
     }
-    axios.get(`${API_PATHS.bff}/product/${id}`)
+    axios.get(`${API_PATHS.products}/products/${id}`)
       .then(res => {
         setProduct(res.data);
         setIsLoading(false);
