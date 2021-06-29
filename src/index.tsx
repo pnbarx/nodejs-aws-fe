@@ -15,7 +15,7 @@ axios.interceptors.response.use(
     return response;
   },
   function (error) {
-    if (error?.response?.status === 400) {
+    if (error?.response?.status && error.response.status >= 400) {
       alert(error.response.data?.data || JSON.stringify(error.response.data));
     }
 
